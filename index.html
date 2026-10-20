@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Sprint · Week 3 Workspace · Critical Evaluation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Libre+Franklin:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#143865;--blue:#1c4f8f;--gold:#d39f10;--dgold:#8c7535;--dsky:#c1cddd;--msky:#e1e8f2;--sky:#edf2f9;--warm:#efe9d9;--ink:#143865;--slate:#2f4566;--ok:#1f6b3a;--okbg:#e3f1e7;--bad:#9b2c1a;--badbg:#fbe9e4;--paper:#fbfcfe}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:110px}
+body{margin:0;background:var(--sky);color:var(--ink);font:17px/1.55 "Libre Franklin",Arial,Helvetica,sans-serif}
+h1,h2,h3,.mont{font-family:Montserrat,Arial,sans-serif}
+a{color:var(--blue)}
+header.top{background:var(--navy);color:#f8fafd;padding:22px 20px 18px}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+.top .wrap{display:flex;flex-wrap:wrap;gap:18px 28px;align-items:center;justify-content:space-between;padding:0}
+.brand{display:flex;flex-direction:column;gap:10px}
+.brand img{height:42px;width:auto}
+.brand .wk{font-family:Montserrat,Arial,sans-serif;color:var(--gold);font-weight:700;font-size:.9rem;letter-spacing:.06em}
+.brand h1{margin:0;font-size:1.65rem;line-height:1.15;font-weight:800}
+.who{display:flex;flex-direction:column;gap:8px;min-width:260px}
+.who label{font-size:.85rem;color:var(--dsky)}
+.who input{font:inherit;padding:9px 12px;border-radius:8px;border:0;width:100%}
+.btns{display:flex;flex-wrap:wrap;gap:8px}
+button{font:600 .92rem "Libre Franklin",Arial,sans-serif;border-radius:8px;border:2px solid var(--navy);background:var(--navy);color:#f8fafd;padding:8px 14px;cursor:pointer}
+button.ghost{background:transparent;color:var(--navy)}
+.top button{border-color:var(--gold);background:var(--gold);color:var(--navy)}
+.top button.ghost{background:transparent;color:#f8fafd;border-color:var(--dsky)}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+nav.bar{position:sticky;top:0;z-index:20;background:#f8fafd;border-bottom:2px solid var(--dsky)}
+nav.bar .wrap{display:flex;gap:6px;overflow-x:auto;padding:8px 20px;align-items:center}
+nav.bar a{flex:none;text-decoration:none;font:600 .88rem Montserrat,Arial,sans-serif;color:var(--navy);padding:6px 10px;border-radius:999px;border:2px solid transparent}
+nav.bar a.done{background:var(--okbg);border-color:#9cc9aa}
+.prog{height:6px;background:var(--msky)}
+.prog i{display:block;height:100%;width:0;background:var(--gold);transition:width .3s}
+.progtxt{font-size:.85rem;color:var(--slate);margin:6px 0 0}
+main.wrap{padding-top:22px;padding-bottom:60px}
+section.act{background:var(--paper);border-radius:16px;padding:22px 24px;margin:0 0 22px;border:1px solid var(--dsky)}
+section.act>h2{margin:.1rem 0 .3rem;font-size:1.35rem;line-height:1.25}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px}
+.tag{font:700 .78rem Montserrat,Arial,sans-serif;padding:3px 10px;border-radius:999px;letter-spacing:.03em}
+.tag.engage{background:var(--gold);color:var(--navy)}.tag.study{background:var(--blue);color:#f8fafd}.tag.activate{background:var(--navy);color:var(--gold)}.tag.time{background:var(--msky);color:var(--slate)}
+.how{background:var(--sky);border-left:5px solid var(--gold);padding:10px 14px;border-radius:8px;margin:0 0 14px}
+.how ol,.how ul{margin:.3rem 0;padding-left:1.3rem}
+.card{border:1px solid var(--dsky);border-radius:12px;padding:14px 16px;margin:10px 0;background:#fff}
+.card h3{margin:0 0 6px;font-size:1.02rem}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media (max-width:720px){.grid2,.grid3{grid-template-columns:1fr}.brand h1{font-size:1.35rem}}
+label.f{display:block;font-weight:600;font-size:.92rem;margin:8px 0 4px}
+input[type=text],input[type=url],textarea,select{font:inherit;width:100%;padding:8px 10px;border:1.5px solid var(--dsky);border-radius:8px;background:#fff;color:var(--ink)}
+textarea{min-height:64px;resize:vertical}
+textarea.tall{min-height:150px}
+.opt{display:flex;gap:10px;align-items:flex-start;padding:7px 10px;border-radius:8px;cursor:pointer}
+.opt:hover{background:var(--sky)}
+.opt input{margin-top:5px}
+.fb{margin-top:8px;padding:8px 12px;border-radius:8px;font-size:.95rem;display:none}
+.fb.show{display:block}
+.fb.ok{background:var(--okbg);color:var(--ok)}.fb.no{background:var(--badbg);color:var(--bad)}.fb.info{background:var(--warm);color:#5c4a1a}
+select.ok{border-color:#5aa774;background:var(--okbg)}select.no{border-color:#d0806f;background:var(--badbg)}
+.hint{font-size:.9rem;color:var(--slate)}
+details.hintbox summary{cursor:pointer;color:var(--blue);font-size:.9rem}
+.doc{background:#fff;border:1px solid var(--dsky);border-radius:12px;padding:16px 20px;font-size:1rem;line-height:1.7}
+.doc h3{margin:0 0 4px}
+.doc .src{font-size:.85rem;color:var(--slate);margin:0 0 10px}
+.cl{background:#fff5d6;border-bottom:2px solid var(--gold);padding:1px 2px}
+.cl b{font:800 .75rem Montserrat,Arial,sans-serif;background:var(--navy);color:#fff;border-radius:999px;padding:1px 6px;margin-right:4px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.score{font:800 1.4rem Montserrat,Arial,sans-serif}
+.timer{display:inline-flex;gap:8px;align-items:center;background:var(--navy);color:#f8fafd;border-radius:999px;padding:4px 6px 4px 14px;font:700 1rem Montserrat,Arial,sans-serif}
+.timer button{padding:3px 10px;font-size:.8rem;border-color:var(--gold);background:var(--gold);color:var(--navy)}
+.timer.end{background:var(--bad)}
+.phase{border-top:3px solid var(--navy);margin-top:18px;padding-top:12px}
+.phase>h3{margin:0 0 6px;font-size:1.12rem}
+table.voc{width:100%;border-collapse:collapse;font-size:.92rem}
+table.voc td{padding:5px 8px;border-bottom:1px solid var(--msky)}
+table.voc td.n{text-align:right;font-weight:700;width:3em}
+.pill{display:inline-block;padding:1px 9px;border-radius:999px;background:var(--msky);font-size:.85rem}
+.pill.on{background:var(--okbg);color:var(--ok);font-weight:700}
+.claimset{display:inline-block;font:700 .75rem Montserrat,Arial,sans-serif;background:var(--msky);border-radius:999px;padding:2px 8px;margin-left:6px}
+.claimset.mine{background:var(--gold);color:var(--navy)}
+pre.memo{white-space:pre-wrap;background:#fff;border:1px solid var(--dsky);border-radius:12px;padding:16px;font:15px/1.55 "Libre Franklin",Arial,sans-serif}
+.toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:var(--navy);color:#fff;padding:10px 18px;border-radius:999px;opacity:0;transition:opacity .25s;pointer-events:none;z-index:50}
+.toast.show{opacity:1}
+.ladder td{padding:6px 8px;vertical-align:middle}
+.muted{color:var(--slate);font-size:.92rem}
+footer{text-align:center;color:var(--slate);font-size:.85rem;padding:20px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.prog i,.toast{transition:none}}
+@media print{nav.bar,.btns,button{display:none!important}section.act{break-inside:avoid-page}}
+</style>
+</head>
+<body>
+<header class="top">
+ <div class="wrap">
+  <div class="brand">
+   <img src="data:image/png;base64,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" alt="Approach International Student Center">
+   <span class="wk">AI Sprint · Week 3 · Fall 2026</span>
+   <h1>Critical Evaluation: Accuracy, Bias &amp; Verification</h1>
+  </div>
+  <div class="who">
+   <label for="studentName">Your name</label>
+   <input id="studentName" type="text" data-k="name" autocomplete="name" placeholder="First and last name">
+   <div class="btns">
+    <button type="button" id="btnExport">Export my work</button>
+    <button type="button" class="ghost" id="btnCopy">Copy my answers</button>
+    <button type="button" class="ghost" id="btnReset">Clear all</button>
+   </div>
+  </div>
+ </div>
+</header>
+<nav class="bar" aria-label="Activities">
+ <div class="prog" aria-hidden="true"><i id="progBar"></i></div>
+ <div class="wrap" id="navLinks">
+  <a href="#goals" data-sec="goals">Goals</a>
+  <a href="#a1" data-sec="a1">1 Two Truths</a>
+  <a href="#a2" data-sec="a2">2 Vocabulary</a>
+  <a href="#a3" data-sec="a3">3 Error Detective</a>
+  <a href="#a4" data-sec="a4">4 Toolkit</a>
+  <a href="#a5" data-sec="a5">5 Fact-Check Lab</a>
+  <a href="#a6" data-sec="a6">6 Team Audit</a>
+  <a href="#a7" data-sec="a7">7 Memo Planner</a>
+  <a href="#a8" data-sec="a8">8 Exit Ticket</a>
+  <a href="#hw" data-sec="hw">Homework</a>
+ </div>
+</nav>
+
+<main class="wrap">
+<p class="progtxt" id="progTxt">0 of 9 activities complete · Your work saves automatically in this browser.</p>
+
+<section class="act" id="goals">
+ <h2>Today’s goals</h2>
+ <div class="grid2">
+  <div>
+   <p>By the end of today you can:</p>
+   <ol>
+    <li>Name five types of AI error.</li>
+    <li>Verify a claim with two reliable sources.</li>
+    <li>Rank sources from primary source to “not a source”.</li>
+    <li>Report findings with evidence language.</li>
+    <li>Rate an AI report and fix it with a follow-up prompt.</li>
+   </ol>
+   <div class="card"><h3>Assignments</h3>
+    <p style="margin:0"><b>Due today:</b> A1 Prompt Lab Journal (export it from your Week 2 workspace).<br><b>Assigned today:</b> A2 Fact-Check &amp; Verification Memo (5%), due Week 4. You start it in Activity 7 and finish it in the Homework section.</p></div>
+  </div>
+  <div>
+   <h3 style="margin:0 0 6px;font-size:1.02rem">Vocabulary tracker</h3>
+   <p class="muted" style="margin:0 0 6px">Counts the Week 3 words you use in your own writing today. Goal: use every word at least once.</p>
+   <table class="voc" id="vocTable"></table>
+   <p class="muted" id="vocSummary"></p>
+  </div>
+ </div>
+</section>
+
+<section class="act" id="a1">
+ <h2>Activity 1 — Two Truths and an AI Lie</h2>
+ <div class="meta"><span class="tag engage">Engage</span><span class="tag time">14 min · pairs</span></div>
+ <div class="how">An AI wrote three statements in each round. One is false. Choose the lie, give one reason, and rate how sure you are. Your teacher will tell you when to reveal the answers.</div>
+ <div id="a1Rounds"></div>
+ <div class="row"><button type="button" id="a1Reveal">Reveal the answers</button><span class="muted" id="a1Score"></span></div>
+ <label class="f" for="a1_why">After the reveal: why did the lies sound true?</label>
+ <textarea id="a1_why" data-k="a1_why" placeholder="The lies sounded true because…"></textarea>
+</section>
+
+<section class="act" id="a2">
+ <h2>Activity 2 — Vocabulary Builder</h2>
+ <div class="meta"><span class="tag study">Study</span><span class="tag time">8 min · individual</span></div>
+ <div class="how">Match each term to its meaning. Press <b>Check</b>, fix any mistakes, then write one sentence with two of the terms.</div>
+ <div class="grid2" id="a2Items"></div>
+ <div class="row" style="margin-top:10px"><button type="button" id="a2Check">Check</button><span class="muted" id="a2Score"></span></div>
+ <label class="f" for="a2_sent">Your sentence (two terms)</label>
+ <textarea id="a2_sent" data-k="a2_sent" placeholder="Example: The claim was unsupported, so I cross-checked it with a reliable source."></textarea>
+</section>
+
+<section class="act" id="a3">
+ <h2>Activity 3 — Error Detective</h2>
+ <div class="meta"><span class="tag study">Study</span><span class="tag time">12 min · pairs</span></div>
+ <div class="how">
+  <p style="margin:0 0 6px">Five types of AI error:</p>
+  <ul>
+   <li><b>Hallucination:</b> invented facts, names, quotes or sources (fabricated).</li>
+   <li><b>Outdated:</b> true before, but not now.</li>
+   <li><b>Unsupported:</b> no evidence; watch for “always”, “all”, “studies show”.</li>
+   <li><b>Bias:</b> a stereotype, or only one side of the story.</li>
+   <li><b>Calculation:</b> a wrong number, date or step.</li>
+  </ul>
+  <p style="margin:6px 0 0">Read each AI output and the check result. Choose the error type. Goal: 8 of 10.</p>
+ </div>
+ <div id="a3Items"></div>
+ <div class="row" style="margin-top:10px"><button type="button" id="a3Check">Check</button><span class="muted" id="a3Score"></span></div>
+ <label class="f" for="a3_fix">B2+ challenge: write one follow-up prompt that fixes two of these errors.</label>
+ <textarea id="a3_fix" data-k="a3_fix" placeholder="Rewrite your answer. Show the calculation step by step and…"></textarea>
+</section>
+
+<section class="act" id="a4">
+ <h2>Activity 4 — Verification Toolkit</h2>
+ <div class="meta"><span class="tag study">Study</span><span class="tag time">10 min · individual</span></div>
+ <div class="how">Learn the 4-step check, place five sources on the source ladder, and practise evidence language.</div>
+ <div class="card"><h3>Part A · Put the 4-step check in order</h3><div class="grid2" id="a4Steps"></div></div>
+ <div class="card"><h3>Part B · The source ladder</h3>
+  <p class="muted" style="margin:0 0 6px">Claim: “Canada’s population passed 40 million in 2023.” Where does each source belong?</p>
+  <table class="ladder" id="a4Ladder" style="width:100%"></table>
+ </div>
+ <div class="row"><button type="button" id="a4Check">Check Parts A and B</button><span class="muted" id="a4Score"></span></div>
+ <div class="card"><h3>Part C · Evidence language</h3>
+  <p class="muted" style="margin:0 0 6px">Complete each sentence about any claim from today.</p>
+  <label class="f" for="a4_e1">According to…</label><input type="text" id="a4_e1" data-k="a4_e1" placeholder="According to Statistics Canada, …">
+  <label class="f" for="a4_e2">I could not find evidence that…</label><input type="text" id="a4_e2" data-k="a4_e2" placeholder="I could not find evidence that …">
+  <label class="f" for="a4_e3">This claim is partly true: …, but …</label><input type="text" id="a4_e3" data-k="a4_e3" placeholder="This claim is partly true: …, but …">
+ </div>
+</section>
+
+<section class="act" id="a5">
+ <h2>Activity 5 — Fact-Check Lab</h2>
+ <div class="meta"><span class="tag activate">Activate</span><span class="tag time">3 min setup · 22 min verify · 8 min swap</span></div>
+ <div class="how">
+  <ol>
+   <li>Read the AI article once.</li>
+   <li>Choose your set. Your pair checks four claims; the other set’s claims come from your swap partners.</li>
+   <li>For each claim: verdict, error type (if not true), two sources with a reason they are reliable, and one evidence sentence.</li>
+  </ol>
+ </div>
+ <div class="row"><label class="f" for="a5_set" style="margin:0">My pair’s set:</label>
+  <select id="a5_set" data-k="a5_set" style="width:auto"><option value="">Choose…</option><option value="A">Set A (claims 1, 3, 5, 7)</option><option value="B">Set B (claims 2, 4, 6, 8)</option></select>
+  <span class="timer" data-timer="a5" data-min="22"><span class="t">22:00</span><button type="button" data-act="start">Start</button><button type="button" data-act="reset">Reset</button></span>
+ </div>
+ <div class="doc" style="margin-top:12px">
+  <h3>The Internet: A Short Business History</h3>
+  <p class="src">AI-generated text · prepared for this lesson · contains errors</p>
+  <p>The internet changed how companies do business in only a few decades. <span class="cl"><b>1</b>The World Wide Web was invented by Tim Berners-Lee at CERN in 1989.</span> Soon after, new companies began to grow online. <span class="cl"><b>2</b>Amazon, founded by Jeff Bezos in 1994, began as an online bookstore.</span> <span class="cl"><b>3</b>Google was founded in 1998 by Larry Page and Sergey Brin, who met as students at Harvard University.</span></p>
+  <p>Communication changed too. <span class="cl"><b>4</b>The first email was sent in 1995 by engineers at Microsoft,</span> and email quickly became the main tool for business communication. Video also became important: <span class="cl"><b>5</b>Google bought YouTube in 2006 for $1.65 billion.</span></p>
+  <p>Social media created new ways to reach customers. <span class="cl"><b>6</b>Twitter, led by its CEO Jack Dorsey, is one of the most popular platforms for business news today.</span> However, social media also has risks. <span class="cl"><b>7</b>A 2020 Stanford study by Dr. Helen Marsh proved that social media makes all teenagers unhappy.</span> Today, online sales are essential: <span class="cl"><b>8</b>exactly 75% of all businesses in the world now sell their products online.</span></p>
+ </div>
+ <div class="card" style="background:var(--warm);border-color:#d8cba4"><h3>Model · Claim 1</h3>
+  <p style="margin:0">Verdict: <b>True</b>. Sources: CERN “The birth of the Web” (primary: the place it happened) and W3C, the web standards organization Berners-Lee founded. Evidence sentence: “According to CERN, Tim Berners-Lee proposed the World Wide Web there in 1989, and W3C confirms this.”</p></div>
+ <div id="a5Claims"></div>
+ <div class="row" style="margin-top:10px"><button type="button" class="ghost" id="a5Key">Show answers (after the debrief)</button><span class="muted" id="a5Score"></span></div>
+ <label class="f" for="a5_surprise">One surprise from the lab</label>
+ <textarea id="a5_surprise" data-k="a5_surprise" placeholder="I was surprised that…"></textarea>
+</section>
+
+<section class="act" id="a6">
+ <h2>Activity 6 — Team Reliability Audit (AI Sprint)</h2>
+ <div class="meta"><span class="tag activate">Activate</span><span class="tag time">75 min · teams of 3–4</span></div>
+ <div class="how">Your manager asked an AI to write a short report. Your team audits it in five phases, fixes it with a follow-up prompt, and gives a 60-second verdict. Everyone writes in their own workspace; the Recorder’s workspace is the team copy.</div>
+ <div class="grid3">
+  <div><label class="f" for="a6_team">Team name or number</label><input type="text" id="a6_team" data-k="a6_team"></div>
+  <div><label class="f" for="a6_role">My role</label><select id="a6_role" data-k="a6_role"><option value="">Choose…</option><option>Reader</option><option>Searcher</option><option>Recorder</option><option>Reporter</option></select></div>
+  <div><label class="f" for="a6_mates">Teammates</label><input type="text" id="a6_mates" data-k="a6_mates" placeholder="First names"></div>
+ </div>
+ <div class="doc" style="margin-top:14px">
+  <h3>Report: Is a four-day work week right for us?</h3>
+  <p class="src">AI-generated for a manager · prepared for this lesson · contains errors</p>
+  <p>Many companies are now testing a four-day work week, and the results are very positive. <span class="cl"><b>1</b>Iceland ran large trials from 2015 to 2019 with about 2,500 public-sector workers, around 1% of the country’s working population.</span> <span class="cl"><b>2</b>In a 2022 UK pilot, 61 companies tried a four-day week, and 56 of them continued after the trial ended.</span> <span class="cl"><b>3</b>Microsoft Japan reported a productivity increase of about 40% in its 2019 trial.</span></p>
+  <p>The financial benefits are clear. <span class="cl"><b>4</b>Every company that tries a four-day week increases its profits by at least 40%.</span> The change is also simple: <span class="cl"><b>5</b>moving from five 8-hour days to four 8-hour days cuts working time from 40 to 32 hours, a 25% reduction.</span> Experts agree that this is the future. <span class="cl"><b>6</b>Professor James Holloway of the London Institute of Work Studies (2023) says, “The five-day week will disappear completely by 2030.”</span></p>
+  <p>Managers should prepare for some resistance. <span class="cl"><b>7</b>Older employees usually resist new schedules, so managers should expect most complaints from staff over 50.</span> However, <span class="cl"><b>8</b>there are no real disadvantages for businesses, and customers will not notice any difference.</span> We recommend starting the four-day week next month.</p>
+ </div>
+
+ <div class="phase"><h3>Phase 1 — Scan <span class="timer" data-timer="p1" data-min="10"><span class="t">10:00</span><button type="button" data-act="start">Start</button><button type="button" data-act="reset">Reset</button></span></h3>
+  <p class="muted">Read the whole report once. Don’t search yet. Give each claim a first guess.</p>
+  <div class="grid2" id="a6Guess"></div></div>
+
+ <div class="phase"><h3>Phase 2 — Verify <span class="timer" data-timer="p2" data-min="25"><span class="t">25:00</span><button type="button" data-act="start">Start</button><button type="button" data-act="reset">Reset</button></span></h3>
+  <p class="muted">Use the 4-step check. Two reliable sources per claim, at least one primary. B2 support: you may verify 6 of the 8 claims.</p>
+  <div id="a6Verify"></div></div>
+
+ <div class="phase"><h3>Phase 3 — Bias &amp; balance check <span class="timer" data-timer="p3" data-min="10"><span class="t">10:00</span><button type="button" data-act="start">Start</button><button type="button" data-act="reset">Reset</button></span></h3>
+  <label class="f" for="a6_b1">1. Does the report describe a group of people with a stereotype? Quote it.</label><textarea id="a6_b1" data-k="a6_b1"></textarea>
+  <label class="f" for="a6_b2">2. Does it give benefits and disadvantages? What is missing?</label><textarea id="a6_b2" data-k="a6_b2"></textarea>
+  <label class="f" for="a6_b3">3. Who is missing? Which jobs would find a four-day week hard?</label><textarea id="a6_b3" data-k="a6_b3"></textarea>
+  <label class="f" for="a6_b4">4. Balance rating (1 = very one-sided, 4 = balanced)</label>
+  <select id="a6_b4" data-k="a6_b4" style="width:auto"><option value="">Choose…</option><option>1</option><option>2</option><option>3</option><option>4</option></select>
+  <p class="muted">Block C ends here in the 4 × 50 format. Press <b>Export my work</b> before you leave.</p></div>
+
+ <div class="phase"><h3>Phase 4 — Fix it with AI <span class="timer" data-timer="p4" data-min="15"><span class="t">15:00</span><button type="button" data-act="start">Start</button><button type="button" data-act="reset">Reset</button></span></h3>
+  <p class="muted">Paste the report into your AI assistant, then send a follow-up prompt. Use the five parts: Role, Context, Task, Format, Constraints. Name the specific problems you found.</p>
+  <label class="f" for="a6_prompt">Our follow-up prompt</label>
+  <textarea id="a6_prompt" data-k="a6_prompt" class="tall" placeholder="Act as a careful HR analyst. Rewrite this report for our managers. Keep only claims you can support…"></textarea>
+  <div class="row"><button type="button" class="ghost" data-copy="a6_prompt">Copy prompt</button></div>
+  <label class="f" for="a6_newver">The AI’s new version (paste it)</label>
+  <textarea id="a6_newver" data-k="a6_newver" class="tall"></textarea>
+  <p class="muted">Check two sources the AI gave in its new version. Warning: AI can invent new sources too.</p>
+  <div class="grid2">
+   <div class="card"><label class="f" for="a6_ns1">New source 1 (title or URL)</label><input type="text" id="a6_ns1" data-k="a6_ns1">
+    <label class="f" for="a6_ns1x">Does it exist and support the claim?</label><select id="a6_ns1x" data-k="a6_ns1x"><option value="">Choose…</option><option>Yes, it exists and supports the claim</option><option>It exists, but does not support the claim</option><option>No, I could not find it (fabricated?)</option></select></div>
+   <div class="card"><label class="f" for="a6_ns2">New source 2 (title or URL)</label><input type="text" id="a6_ns2" data-k="a6_ns2">
+    <label class="f" for="a6_ns2x">Does it exist and support the claim?</label><select id="a6_ns2x" data-k="a6_ns2x"><option value="">Choose…</option><option>Yes, it exists and supports the claim</option><option>It exists, but does not support the claim</option><option>No, I could not find it (fabricated?)</option></select></div>
+  </div>
+  <label class="f" for="a6_better">What did the follow-up prompt fix? What still needs checking?</label>
+  <textarea id="a6_better" data-k="a6_better"></textarea></div>
+
+ <div class="phase"><h3>Phase 5 — Rate &amp; report <span class="timer" data-timer="p5" data-min="15"><span class="t">15:00</span><button type="button" data-act="start">Start</button><button type="button" data-act="reset">Reset</button></span></h3>
+  <p class="muted">Score the <b>original</b> report. 4 = strong, 1 = weak.</p>
+  <div id="a6Rubric"></div>
+  <p class="row"><span>Total:</span> <span class="score" id="a6Total">–/20</span> <span class="pill" id="a6Label">Not scored yet</span></p>
+  <p class="muted">17–20 Reliable · 11–16 Use with caution · 5–10 Not reliable</p>
+  <label class="f" for="a6_verdict">Our 60-second verdict (the frame fills in your score; edit freely)</label>
+  <textarea id="a6_verdict" data-k="a6_verdict" class="tall"></textarea>
+  <div class="row"><button type="button" class="ghost" id="a6Frame">Fill the verdict frame</button></div>
+  <details class="hintbox"><summary>Signposting phrases</summary><p class="hint">First, … · The main problem is … · However, … · To sum up, …</p></details>
+ </div>
+</section>
+
+<section class="act" id="a7">
+ <h2>Activity 7 — Memo Planner</h2>
+ <div class="meta"><span class="tag activate">Activate</span><span class="tag time">12 min · individual</span></div>
+ <div class="how">Start A2. Choose a public topic from your work or studies, ask AI for a short text with facts, and choose six claims to check. Your claims appear in the Memo Builder (Homework).</div>
+ <label class="f" for="a7_topic">Topic</label>
+ <input type="text" id="a7_topic" data-k="a7_topic" placeholder="Example: the history of a company in my field">
+ <label class="f" for="a7_prompt">My prompt</label>
+ <textarea id="a7_prompt" data-k="a7_prompt" placeholder="Act as a business journalist. Write a 200-word overview of … for international students. Include names, dates and numbers."></textarea>
+ <details class="hintbox"><summary>Backup prompt (B2 support)</summary><p class="hint">“Act as a business journalist. Write a 200-word overview of [company or industry] for international students. Include at least six facts with names, dates or numbers. Use plain English.”</p></details>
+ <label class="f" for="a7_text">The AI’s text (paste it)</label>
+ <textarea id="a7_text" data-k="a7_text" class="tall"></textarea>
+ <p class="muted" style="margin-bottom:0">Six claims to check (copy them exactly from the AI text):</p>
+ <div class="grid2" id="a7Claims"></div>
+ <p class="muted">Privacy: public topics only. No personal, client or company data.</p>
+</section>
+
+<section class="act" id="a8">
+ <h2>Activity 8 — Exit Ticket</h2>
+ <div class="meta"><span class="tag study">Study</span><span class="tag time">8 min · individual</span></div>
+ <div id="a8Mcq"></div>
+ <div class="row"><button type="button" id="a8Check">Check 1–3</button><span class="muted" id="a8Score"></span></div>
+ <label class="f" for="a8_q4">4. Write one sentence with three Week 3 terms.</label>
+ <textarea id="a8_q4" data-k="a8_q4"></textarea>
+ <p class="muted" id="a8Terms">Week 3 terms in your sentence: 0</p>
+ <div class="grid2">
+  <div><label class="f" for="a8_conf">5. How confident are you about checking AI claims?</label>
+   <select id="a8_conf" data-k="a8_conf"><option value="">Choose…</option><option>1 · Not yet</option><option>2 · A little</option><option>3 · Quite confident</option><option>4 · Very confident</option></select></div>
+  <div><label class="f" for="a8_q">One question for your teacher</label><input type="text" id="a8_q" data-k="a8_q"></div>
+ </div>
+</section>
+
+<section class="act" id="hw">
+ <h2>Homework — A2 Fact-Check &amp; Verification Memo (5%), due Week 4</h2>
+ <div class="meta"><span class="tag activate">Homework</span><span class="tag time">One page</span></div>
+ <div class="how">
+  <ul>
+   <li>Finish all six claims below: verdict, two reliable sources (at least one primary), and an evidence sentence.</li>
+   <li>Add your overall reliability rating and recommendation.</li>
+   <li>Press <b>Copy memo</b>, paste it into a document, and submit it with your AI-use statement.</li>
+  </ul>
+  <details class="hintbox"><summary>Rubric (20 points)</summary><p class="hint">Claims and verdicts 5 · Sources 5 · Evidence language 4 · Memo format and tone 3 · AI-use disclosure 3</p></details>
+ </div>
+ <div class="grid2">
+  <div><label class="f" for="hw_to">To</label><input type="text" id="hw_to" data-k="hw_to" placeholder="[Instructor name]"></div>
+  <div><label class="f" for="hw_date">Date</label><input type="text" id="hw_date" data-k="hw_date" placeholder="[Date]"></div>
+ </div>
+ <label class="f" for="hw_subject">Subject</label>
+ <input type="text" id="hw_subject" data-k="hw_subject" placeholder="Verification of an AI-generated text about …">
+ <label class="f" for="hw_purpose">Purpose (1–2 sentences)</label>
+ <textarea id="hw_purpose" data-k="hw_purpose" placeholder="This memo reports on six claims from an AI-generated text about …"></textarea>
+ <div id="hwClaims"></div>
+ <div class="grid2">
+  <div><label class="f" for="hw_rating">Overall reliability</label>
+   <select id="hw_rating" data-k="hw_rating"><option value="">Choose…</option><option>Reliable</option><option>Use with caution</option><option>Not reliable</option></select></div>
+  <div></div>
+ </div>
+ <label class="f" for="hw_reco">Recommendation (2–3 sentences)</label>
+ <textarea id="hw_reco" data-k="hw_reco" placeholder="I recommend that readers…"></textarea>
+ <label class="f" for="hw_ai">AI-use statement</label>
+ <textarea id="hw_ai" data-k="hw_ai" placeholder="I used [AI assistant] to generate the text I checked. My prompt is below. I verified every claim myself using the sources listed. I changed…"></textarea>
+ <h3 style="margin:16px 0 6px;font-size:1.05rem">Memo preview</h3>
+ <pre class="memo" id="memoPreview"></pre>
+ <div class="row"><button type="button" id="btnMemo">Copy memo</button></div>
+</section>
+</main>
+<footer>AI Sprint · Approach International Student Center · Week 3 workspace. Your work is saved only in this browser on this device.</footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+(function(){
+"use strict";
+var KEY="aisprint-w3-v1";
+var state={};
+try{state=JSON.parse(localStorage.getItem(KEY)||"{}")||{};}catch(e){state={};}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){}}
+function $(id){return document.getElementById(id);}
+function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c];});}
+function opts(list,ph){return '<option value="">'+(ph||"Choose…")+'</option>'+list.map(function(o){return '<option value="'+esc(o)+'">'+esc(o)+'</option>';}).join("");}
+function toast(m){var t=$("toast");t.textContent=m;t.classList.add("show");clearTimeout(toast._t);toast._t=setTimeout(function(){t.classList.remove("show");},1800);}
+
+/* ---------- DATA ---------- */
+var A1=[
+ {s:["The Pacific is the largest ocean on Earth.","The Great Wall of China is easily visible from the Moon.","Mount Everest is the tallest mountain above sea level."],lie:1,why:"The Great Wall is far too narrow to see from the Moon with the naked eye. It is a popular myth."},
+ {s:["Toyota is a Japanese car company.","Samsung is a South Korean company.","Apple was founded in 1976 by Steve Jobs and Bill Gates."],lie:2,why:"Apple was founded by Steve Jobs, Steve Wozniak and Ronald Wayne. Bill Gates founded Microsoft. True year, one wrong name."},
+ {s:["The QWERTY keyboard was designed in 1985 to make computer typing faster.","Wikipedia was launched in 2001.","The first iPhone went on sale in 2007."],lie:0,why:"QWERTY comes from typewriters in the 1870s, long before computers."},
+ {s:["Water boils at 100 °C at sea level.","Humans use only 10% of their brains.","Light from the Sun takes about 8 minutes to reach Earth."],lie:1,why:"Brain scans show activity across the whole brain. The 10% idea is a famous myth."}
+];
+var VOC=[
+ ["claim","a statement that something is true, often without proof yet"],
+ ["accurate","correct and true in every detail"],
+ ["reliable","can be trusted to be correct"],
+ ["credible","believable because it comes from an expert or trusted place"],
+ ["evidence","facts or information that show something is true"],
+ ["fact-check","to check whether a statement is true"],
+ ["cross-check","to compare information from two or more sources"],
+ ["primary source","the original place information comes from"],
+ ["outdated","no longer true or current"],
+ ["unsupported","given without evidence or a source"],
+ ["fabricated","invented and presented as real"],
+ ["stereotype","an unfair, fixed idea about a group of people"]
+];
+var VOC_RX=[/\bclaims?\b/gi,/\b(in)?accura(te|tely|cy)\b/gi,/\b(un)?reliab(le|ility|ly)\b/gi,/\bcredib(le|ility)\b/gi,/\bevidence\b/gi,/\bfact[- ]?check(s|ed|ing|er|ers)?\b/gi,/\bcross[- ]?check(s|ed|ing)?\b/gi,/\bprimary sources?\b/gi,/\b(outdated|out of date)\b/gi,/\bunsupported\b/gi,/\bfabricat(e|es|ed|ing|ion)\b/gi,/\bstereotyp(e|es|ed|ical)\b/gi];
+var TYPES=["Hallucination","Outdated","Unsupported","Bias","Calculation"];
+var A3=[
+ {o:"“The best book on this topic is <i>Leading with Data</i> by Ana Ruiz (2018).”",c:"No book or author with this name appears in any library catalogue.",a:"Hallucination",h:"Something was invented."},
+ {o:"“If sales grow from 200 to 250 units, that is a 50% increase.”",c:"(250 − 200) ÷ 200 = ?",a:"Calculation",h:"Do the maths."},
+ {o:"“The world population is about 7 billion.”",c:"The UN reported that the world population passed 8 billion in November 2022.",a:"Outdated",h:"It was true once."},
+ {o:"A job ad for a nurse uses “she” in every sentence; a job ad for an engineer uses “he”.",c:"Both jobs are open to everyone.",a:"Bias",h:"Think about groups of people."},
+ {o:"“Remote workers are always more productive than office workers.”",c:"No source is given. Research shows mixed results.",a:"Unsupported",h:"Look for “always”."},
+ {o:"“Twitter’s CEO is Jack Dorsey.”",c:"Jack Dorsey stepped down in 2021, and Twitter was renamed X in 2023.",a:"Outdated",h:"Check the date."},
+ {o:"“As Albert Einstein said, ‘AI will change everything.’”",c:"Einstein died in 1955. There is no record of this quote.",a:"Hallucination",h:"A quote can be invented too."},
+ {o:"“Studies show that most international students prefer online classes.”",c:"No studies are named.",a:"Unsupported",h:"Which studies?"},
+ {o:"“A meeting from 9:45 to 11:15 lasts 1 hour 15 minutes.”",c:"Count the minutes.",a:"Calculation",h:"Count it again."},
+ {o:"A summary of a debate about a new airport lists five benefits and no costs or opposing views.",c:"Local residents and environmental groups raised several concerns.",a:"Bias",h:"One side of the story."}
+];
+var STEPS=["Spot the claim","Find the source","Cross-check with a second reliable source","Decide and report"];
+var LEVELS=["Primary source","Good secondary source","Starting point only","Not a source"];
+var LADDER=[
+ {s:"Statistics Canada news release",a:"Primary source"},
+ {s:"National news article that quotes Statistics Canada",a:"Good secondary source"},
+ {s:"Wikipedia page on Canada’s demographics",a:"Starting point only"},
+ {s:"An answer from an AI chatbot",a:"Not a source"},
+ {s:"A social media video with no links",a:"Not a source"}
+];
+var VERDICTS=["True","False","Partly true","Outdated","Can’t verify"];
+var TYPES2=["None"].concat(TYPES);
+var A5=[
+ {set:"A",t:"The Web was invented by Tim Berners-Lee at CERN in 1989.",v:"True",e:"None",k:"CERN and W3C both confirm this."},
+ {set:"B",t:"Amazon, founded by Jeff Bezos in 1994, began as an online bookstore.",v:"True",e:"None",k:"Amazon’s company history and Britannica confirm this."},
+ {set:"A",t:"Google’s founders met as students at Harvard University.",v:"Partly true",e:"Hallucination",k:"Founded in 1998 by Page and Brin, but they met at Stanford University."},
+ {set:"B",t:"The first email was sent in 1995 by engineers at Microsoft.",v:"False",e:"Hallucination",k:"Ray Tomlinson sent the first networked email on ARPANET in 1971."},
+ {set:"A",t:"Google bought YouTube in 2006 for $1.65 billion.",v:"True",e:"None",k:"Google announced the deal in October 2006."},
+ {set:"B",t:"Twitter, led by its CEO Jack Dorsey, is popular for business news today.",v:"Outdated",e:"Outdated",k:"Dorsey stepped down in 2021; Twitter was renamed X in 2023."},
+ {set:"A",t:"A 2020 Stanford study by Dr. Helen Marsh proved social media makes all teenagers unhappy.",v:"Can’t verify",e:"Hallucination",k:"The study was invented for this lesson. “Proved” and “all” are red flags."},
+ {set:"B",t:"Exactly 75% of all businesses in the world sell their products online.",v:"Can’t verify",e:"Unsupported",k:"No source; “exactly” and “all businesses in the world” cannot be measured."}
+];
+var A6=["Iceland trials 2015–2019: about 2,500 workers, about 1% of workers","2022 UK pilot: 61 companies; 56 continued","Microsoft Japan 2019: productivity up about 40%","Every company increases profits by at least 40%","40 → 32 hours is a 25% reduction","Professor James Holloway quote (2023)","Older employees usually resist; complaints from staff over 50","No real disadvantages; customers won’t notice"];
+var GUESS=["Looks OK","Looks wrong","Not sure"];
+var RUBRIC=[["Accuracy","All checked claims are correct (4) … many claims false or fabricated (1)"],["Evidence & sources","Every key claim has a checkable source (4) … none, or invented ones (1)"],["Currency","Up to date and dated (4) … old or undated (1)"],["Balance","Benefits and risks, no stereotypes (4) … one-sided or stereotyped (1)"],["Numbers","Calculations correct (4) … calculation errors (1)"]];
+var A8=[
+ {q:"1. The AI says: “A 2022 Oxford study found that 90% of CEOs use AI daily.” You cannot find the study anywhere. What type of error is it?",o:["Outdated information","Bias","Fabricated citation (hallucination)","Calculation error"],a:2},
+ {q:"2. Which is the best source to verify a country’s unemployment rate?",o:["An AI chatbot’s answer","The national statistics office website","A personal blog","A social media post"],a:1},
+ {q:"3. Which sentence uses evidence language correctly?",o:["According to the UN, the world population passed 8 billion in 2022.","According the UN, population is 8 billion.","The UN says me that the population is 8 billion.","I think maybe the population is 8 billion, according to me."],a:0}
+];
+
+/* ---------- BUILD ---------- */
+function radioRow(name,label,val){return '<label class="opt"><input type="radio" name="'+name+'" data-k="'+name+'" value="'+val+'"><span>'+label+'</span></label>';}
+$("a1Rounds").innerHTML=A1.map(function(r,i){
+ return '<div class="card"><h3>Round '+(i+1)+'</h3>'+r.s.map(function(s,j){return radioRow("a1_r"+i,(j+1)+". "+esc(s),j);}).join("")+
+ '<div class="grid2"><div><label class="f" for="a1_why'+i+'">My reason</label><input type="text" id="a1_why'+i+'" data-k="a1_why'+i+'" placeholder="I think number … is the lie because…"></div>'+
+ '<div><label class="f" for="a1_c'+i+'">Confidence (1–5)</label><select id="a1_c'+i+'" data-k="a1_c'+i+'">'+opts(["1","2","3","4","5"])+'</select></div></div>'+
+ '<div class="fb" id="a1_fb'+i+'"></div></div>';
+}).join("");
+var defOrder=[4,9,1,11,6,0,8,3,10,2,7,5];
+var defList=defOrder.map(function(i){return VOC[i][1];});
+$("a2Items").innerHTML=VOC.map(function(v,i){
+ return '<div><label class="f" for="a2_'+i+'">'+esc(v[0])+'</label><select id="a2_'+i+'" data-k="a2_'+i+'">'+opts(defList,"Choose the meaning…")+'</select></div>';
+}).join("");
+$("a3Items").innerHTML=A3.map(function(x,i){
+ return '<div class="card"><h3>'+(i+1)+'. '+x.o+'</h3><p class="hint" style="margin:0 0 8px"><b>Check:</b> '+x.c+'</p>'+
+ '<div class="row"><select id="a3_'+i+'" data-k="a3_'+i+'" style="max-width:260px" aria-label="Error type for item '+(i+1)+'">'+opts(TYPES,"Error type…")+'</select>'+
+ '<details class="hintbox"><summary>Hint</summary><span class="hint">'+x.h+'</span></details></div></div>';
+}).join("");
+$("a4Steps").innerHTML=[0,1,2,3].map(function(i){return '<div><label class="f" for="a4_s'+i+'">Step '+(i+1)+'</label><select id="a4_s'+i+'" data-k="a4_s'+i+'">'+opts(STEPS)+'</select></div>';}).join("");
+$("a4Ladder").innerHTML=LADDER.map(function(l,i){return '<tr><td>'+esc(l.s)+'</td><td style="width:45%"><select id="a4_l'+i+'" data-k="a4_l'+i+'" aria-label="Ladder level for '+esc(l.s)+'">'+opts(LEVELS)+'</select></td></tr>';}).join("");
+$("a5Claims").innerHTML=A5.map(function(c,i){
+ var n=i+1;
+ return '<div class="card a5c" data-set="'+c.set+'"><h3>Claim '+n+' <span class="claimset" id="a5set'+n+'">Set '+c.set+'</span></h3><p class="hint" style="margin:0 0 6px">'+esc(c.t)+'</p>'+
+ '<div class="grid2"><div><label class="f" for="a5_v'+n+'">Verdict</label><select id="a5_v'+n+'" data-k="a5_v'+n+'">'+opts(VERDICTS)+'</select></div>'+
+ '<div><label class="f" for="a5_t'+n+'">Error type</label><select id="a5_t'+n+'" data-k="a5_t'+n+'">'+opts(TYPES2)+'</select></div>'+
+ '<div><label class="f" for="a5_s1'+n+'">Source 1 (URL + why reliable)</label><input type="text" id="a5_s1'+n+'" data-k="a5_s1'+n+'"></div>'+
+ '<div><label class="f" for="a5_s2'+n+'">Source 2 (URL + why reliable)</label><input type="text" id="a5_s2'+n+'" data-k="a5_s2'+n+'"></div></div>'+
+ '<label class="f" for="a5_e'+n+'">Evidence sentence</label><input type="text" id="a5_e'+n+'" data-k="a5_e'+n+'" placeholder="According to…">'+
+ '<div class="fb" id="a5_fb'+n+'"></div></div>';
+}).join("");
+$("a6Guess").innerHTML=A6.map(function(c,i){var n=i+1;return '<div><label class="f" for="a6_g'+n+'">'+n+'. '+esc(c)+'</label><select id="a6_g'+n+'" data-k="a6_g'+n+'">'+opts(GUESS)+'</select></div>';}).join("");
+$("a6Verify").innerHTML=A6.map(function(c,i){var n=i+1;
+ return '<details class="card"'+(i===0?' open':'')+'><summary class="mont" style="cursor:pointer;font-weight:700">Claim '+n+': '+esc(c)+' <span class="pill" id="a6p'+n+'">to do</span></summary>'+
+ '<div class="grid2"><div><label class="f" for="a6_v'+n+'">Verdict</label><select id="a6_v'+n+'" data-k="a6_v'+n+'">'+opts(VERDICTS)+'</select></div>'+
+ '<div><label class="f" for="a6_t'+n+'">Error type</label><select id="a6_t'+n+'" data-k="a6_t'+n+'">'+opts(TYPES2)+'</select></div>'+
+ '<div><label class="f" for="a6_s1'+n+'">Source 1</label><input type="text" id="a6_s1'+n+'" data-k="a6_s1'+n+'"></div>'+
+ '<div><label class="f" for="a6_s2'+n+'">Source 2</label><input type="text" id="a6_s2'+n+'" data-k="a6_s2'+n+'"></div></div>'+
+ '<label class="f" for="a6_e'+n+'">Evidence sentence</label><input type="text" id="a6_e'+n+'" data-k="a6_e'+n+'" placeholder="According to…"></details>';
+}).join("");
+$("a6Rubric").innerHTML='<div class="grid2">'+RUBRIC.map(function(r,i){return '<div><label class="f" for="a6_r'+i+'">'+esc(r[0])+'</label><select id="a6_r'+i+'" data-k="a6_r'+i+'">'+opts(["4","3","2","1"])+'</select><p class="hint" style="margin:2px 0 0">'+esc(r[1])+'</p></div>';}).join("")+'</div>';
+$("a7Claims").innerHTML=[1,2,3,4,5,6].map(function(n){return '<div><label class="f" for="a7_c'+n+'">Claim '+n+'</label><input type="text" id="a7_c'+n+'" data-k="a7_c'+n+'"></div>';}).join("");
+$("a8Mcq").innerHTML=A8.map(function(q,i){return '<div class="card"><h3>'+esc(q.q)+'</h3>'+q.o.map(function(o,j){return radioRow("a8_q"+i,esc(o),j);}).join("")+'<div class="fb" id="a8_fb'+i+'"></div></div>';}).join("");
+$("hwClaims").innerHTML=[1,2,3,4,5,6].map(function(n){
+ return '<div class="card"><h3>Claim '+n+'</h3><p class="hint" id="hw_ct'+n+'" style="margin:0 0 6px"></p>'+
+ '<div class="grid2"><div><label class="f" for="hw_v'+n+'">Verdict</label><select id="hw_v'+n+'" data-k="hw_v'+n+'">'+opts(VERDICTS)+'</select></div><div></div>'+
+ '<div><label class="f" for="hw_s1'+n+'">Source 1 (title, URL, why reliable)</label><input type="text" id="hw_s1'+n+'" data-k="hw_s1'+n+'"></div>'+
+ '<div><label class="f" for="hw_s2'+n+'">Source 2 (title, URL, why reliable)</label><input type="text" id="hw_s2'+n+'" data-k="hw_s2'+n+'"></div></div>'+
+ '<label class="f" for="hw_e'+n+'">Evidence sentence</label><input type="text" id="hw_e'+n+'" data-k="hw_e'+n+'" placeholder="According to…"></div>';
+}).join("");
+/* vocab table */
+$("vocTable").innerHTML=VOC.map(function(v,i){return '<tr><td>'+esc(v[0])+'</td><td class="n" id="voc'+i+'">0</td></tr>';}).join("");
+
+var TEXTKEYS=[].map.call(document.querySelectorAll("textarea[data-k],input[type=text][data-k]"),function(el){return el.getAttribute("data-k");}).filter(function(k){return k!=="name";});
+/* ---------- RESTORE ---------- */
+function restore(){
+ document.querySelectorAll("[data-k]").forEach(function(el){
+  var k=el.getAttribute("data-k"),v=state[k];
+  if(v===undefined)return;
+  if(el.type==="radio"){el.checked=(String(v)===el.value);}else{el.value=v;}
+ });
+}
+restore();
+
+/* ---------- SAVE ---------- */
+function onField(e){
+ var el=e.target;if(!el||!el.getAttribute)return;var k=el.getAttribute("data-k");if(!k)return;
+ if(el.type==="radio"){if(el.checked)state[k]=el.value;}else{state[k]=el.value;}
+ save();update();
+}
+document.addEventListener("input",onField);
+document.addEventListener("change",onField);
+
+/* ---------- CHECKS ---------- */
+function filled(k){return state[k]!==undefined&&String(state[k]).trim()!=="";}
+function setFb(id,ok,msg){var f=$(id);f.className="fb show "+(ok===true?"ok":ok===false?"no":"info");f.innerHTML=msg;}
+$("a1Reveal").addEventListener("click",function(){
+ var sc=0;A1.forEach(function(r,i){var c=state["a1_r"+i];var ok=String(c)===String(r.lie);if(ok)sc++;
+  setFb("a1_fb"+i,c===undefined?null:ok,(c===undefined?"Not answered. ":ok?"Correct! ":"Not this time. ")+"The lie is number "+(r.lie+1)+". "+esc(r.why));});
+ state.a1_revealed="1";save();$("a1Score").textContent="You found "+sc+" of 4 lies.";update();
+});
+$("a2Check").addEventListener("click",function(){
+ var sc=0;VOC.forEach(function(v,i){var el=$("a2_"+i);var ok=state["a2_"+i]===v[1];if(ok)sc++;el.classList.toggle("ok",ok);el.classList.toggle("no",filled("a2_"+i)&&!ok);});
+ $("a2Score").textContent=sc+" of 12 correct."+(sc===12?" Excellent!":" Fix the red ones and check again.");
+});
+$("a3Check").addEventListener("click",function(){
+ var sc=0;A3.forEach(function(x,i){var el=$("a3_"+i);var ok=state["a3_"+i]===x.a;if(ok)sc++;el.classList.toggle("ok",ok);el.classList.toggle("no",filled("a3_"+i)&&!ok);});
+ $("a3Score").textContent=sc+" of 10 correct."+(sc>=8?" Goal reached!":" Goal: 8 of 10. Open the hints.");
+});
+$("a4Check").addEventListener("click",function(){
+ var sc=0,tot=9;STEPS.forEach(function(s,i){var el=$("a4_s"+i);var ok=state["a4_s"+i]===s;if(ok)sc++;el.classList.toggle("ok",ok);el.classList.toggle("no",filled("a4_s"+i)&&!ok);});
+ LADDER.forEach(function(l,i){var el=$("a4_l"+i);var ok=state["a4_l"+i]===l.a;if(ok)sc++;el.classList.toggle("ok",ok);el.classList.toggle("no",filled("a4_l"+i)&&!ok);});
+ $("a4Score").textContent=sc+" of "+tot+" correct."+(sc===tot?" The claim is true: Statistics Canada announced 40 million in June 2023.":"");
+});
+$("a5Key").addEventListener("click",function(){
+ var sc=0;A5.forEach(function(c,i){var n=i+1;var v=state["a5_v"+n];var ok=v===c.v;if(ok)sc++;
+  setFb("a5_fb"+n,v===undefined||v===""?null:ok,"Answer: <b>"+esc(c.v)+"</b>"+(c.e!=="None"?" ("+esc(c.e)+")":"")+". "+esc(c.k));});
+ state.a5_revealed="1";save();$("a5Score").textContent=sc+" of 8 verdicts match the key.";update();
+});
+$("a8Check").addEventListener("click",function(){
+ var sc=0;A8.forEach(function(q,i){var c=state["a8_q"+i];var ok=String(c)===String(q.a);if(ok)sc++;
+  setFb("a8_fb"+i,c===undefined?null:ok,c===undefined?"Choose an answer.":ok?"Correct.":"Not quite. The answer is: "+esc(q.o[q.a]));});
+ $("a8Score").textContent=sc+" of 3 correct.";
+});
+
+/* ---------- RUBRIC + FRAME ---------- */
+function rubric(){
+ var tot=0,n=0;for(var i=0;i<5;i++){if(filled("a6_r"+i)){tot+=parseInt(state["a6_r"+i],10);n++;}}
+ var lab=n<5?"Not scored yet":(tot>=17?"Reliable":tot>=11?"Use with caution":"Not reliable");
+ $("a6Total").textContent=(n?tot:"–")+"/20";var L=$("a6Label");L.textContent=lab;L.classList.toggle("on",n===5);
+ return {tot:tot,n:n,lab:lab};
+}
+$("a6Frame").addEventListener("click",function(){
+ var r=rubric();var checked=0,acc=0;for(var i=1;i<=8;i++){if(filled("a6_v"+i)){checked++;if(state["a6_v"+i]==="True")acc++;}}
+ var txt="We rated the report "+(r.n===5?r.lab:"[label]")+", with "+(r.n===5?r.tot:"[__]")+" out of 20.\n"+
+ "We checked "+checked+" claims. "+acc+" were accurate. For example, according to [source], …\n"+
+ "The biggest problem was Claim [__]: it was [fabricated / outdated / biased].\n"+
+ "Our follow-up prompt fixed [__], but [__] still needs checking.";
+ var ta=$("a6_verdict");if(ta.value.trim()&&!window.confirm("Replace your current verdict text with the frame?"))return;
+ ta.value=txt;state.a6_verdict=txt;save();update();
+});
+
+/* ---------- COPY BUTTONS ---------- */
+function copyText(t,msg){
+ function done(){toast(msg||"Copied");}
+ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(done,function(){fallback();});}else fallback();
+ function fallback(){var ta=document.createElement("textarea");ta.value=t;document.body.appendChild(ta);ta.select();try{document.execCommand("copy");done();}catch(e){toast("Select and copy the text manually");}document.body.removeChild(ta);}
+}
+document.querySelectorAll("[data-copy]").forEach(function(b){b.addEventListener("click",function(){copyText($(b.getAttribute("data-copy")).value,"Prompt copied");});});
+
+/* ---------- TIMERS ---------- */
+document.querySelectorAll(".timer").forEach(function(tm){
+ var min=parseInt(tm.getAttribute("data-min"),10),left=min*60,iv=null,t=tm.querySelector(".t"),sb=tm.querySelector('[data-act="start"]');
+ function draw(){var m=Math.floor(left/60),s=left%60;t.textContent=(m<10?"0":"")+m+":"+(s<10?"0":"")+s;tm.classList.toggle("end",left===0);}
+ sb.addEventListener("click",function(){if(iv){clearInterval(iv);iv=null;sb.textContent="Start";return;}
+  if(left===0)left=min*60;iv=setInterval(function(){left=Math.max(0,left-1);draw();if(left===0){clearInterval(iv);iv=null;sb.textContent="Start";toast("Time is up");}},1000);sb.textContent="Pause";});
+ tm.querySelector('[data-act="reset"]').addEventListener("click",function(){if(iv){clearInterval(iv);iv=null;}left=min*60;sb.textContent="Start";draw();});
+ draw();
+});
+
+/* ---------- MEMO ---------- */
+function memo(){
+ var L=[];L.push("MEMO");L.push("To: "+(state.hw_to||"[Instructor]"));L.push("From: "+(state.name||"[Your name]"));L.push("Date: "+(state.hw_date||"[Date]"));L.push("Subject: "+(state.hw_subject||"[Subject]"));L.push("");
+ L.push("Purpose");L.push(state.hw_purpose||"[Purpose]");L.push("");L.push("Findings");
+ for(var n=1;n<=6;n++){L.push(n+". Claim: "+(state["a7_c"+n]||"[claim]"));L.push("   Verdict: "+(state["hw_v"+n]||"[verdict]"));L.push("   Sources: "+(state["hw_s1"+n]||"[source 1]")+"; "+(state["hw_s2"+n]||"[source 2]"));L.push("   Evidence: "+(state["hw_e"+n]||"[evidence sentence]"));}
+ L.push("");L.push("Overall reliability: "+(state.hw_rating||"[rating]"));L.push(state.hw_reco||"[Recommendation]");L.push("");
+ L.push("AI-use statement");L.push(state.hw_ai||"[AI-use statement]");L.push("Prompt used: "+(state.a7_prompt||"[prompt]"));
+ return L.join("\n");
+}
+$("btnMemo").addEventListener("click",function(){copyText(memo(),"Memo copied");});
+
+/* ---------- PROGRESS ---------- */
+function all(keys){return keys.every(filled);}
+function range(p,a,b){var r=[];for(var i=a;i<=b;i++)r.push(p+i);return r;}
+var DONE={
+ a1:function(){return all(range("a1_r",0,3))&&filled("a1_why");},
+ a2:function(){return all(range("a2_",0,11))&&filled("a2_sent");},
+ a3:function(){return all(range("a3_",0,9));},
+ a4:function(){return all(range("a4_s",0,3).concat(range("a4_l",0,4),["a4_e1","a4_e2","a4_e3"]));},
+ a5:function(){var s=state.a5_set;if(!s)return false;var ok=true;A5.forEach(function(c,i){if(c.set===s&&!(filled("a5_v"+(i+1))&&filled("a5_e"+(i+1))))ok=false;});return ok;},
+ a6:function(){return all(range("a6_r",0,4).concat(["a6_prompt","a6_verdict"]));},
+ a7:function(){return all(["a7_topic","a7_prompt","a7_text"].concat(range("a7_c",1,6)));},
+ a8:function(){return all(["a8_q0","a8_q1","a8_q2","a8_q4","a8_conf"]);},
+ hw:function(){return all(range("hw_v",1,6).concat(range("hw_e",1,6),["hw_rating","hw_reco"]));}
+};
+function countTerms(text){var c=0;VOC_RX.forEach(function(rx){rx.lastIndex=0;if(rx.test(text))c++;});return c;}
+function update(){
+ var n=0;Object.keys(DONE).forEach(function(s){var d=DONE[s]();if(d)n++;var a=document.querySelector('nav a[data-sec="'+s+'"]');if(a)a.classList.toggle("done",d);});
+ $("progBar").style.width=Math.round(n/9*100)+"%";
+ $("progTxt").textContent=n+" of 9 activities complete · Your work saves automatically in this browser.";
+ /* vocab */
+ var text=TEXTKEYS.filter(filled).map(function(k){return String(state[k]);}).join("\n");
+ var used=0;VOC_RX.forEach(function(rx,i){var m=text.match(rx);var c=m?m.length:0;if(c)used++;var td=$("voc"+i);td.textContent=c;td.parentNode.style.background=c?"var(--okbg)":"";});
+ $("vocSummary").textContent=used+" of 12 words used so far.";
+ $("a8Terms").textContent="Week 3 terms in your sentence: "+countTerms(state.a8_q4||"")+(countTerms(state.a8_q4||"")>=3?" ✓":"");
+ /* a5 set highlight */
+ for(var i=1;i<=8;i++){var b=$("a5set"+i);b.classList.toggle("mine",!!state.a5_set&&A5[i-1].set===state.a5_set);}
+ /* a6 pills */
+ for(var j=1;j<=8;j++){var p=$("a6p"+j);var d=filled("a6_v"+j)&&filled("a6_e"+j);p.textContent=d?"done":"to do";p.classList.toggle("on",d);}
+ rubric();
+ for(var k=1;k<=6;k++){$("hw_ct"+k).textContent=state["a7_c"+k]?"“"+state["a7_c"+k]+"”":"Add this claim in Activity 7.";}
+ $("memoPreview").textContent=memo();
+}
+
+/* ---------- EXPORT / COPY / RESET ---------- */
+function labelFor(el){var id=el.id;var l=id?document.querySelector('label[for="'+id+'"]'):null;return l?l.textContent.trim():(el.getAttribute("aria-label")||el.getAttribute("data-k"));}
+function allAnswers(){
+ var out=["AI Sprint · Week 3 · Critical Evaluation: Accuracy, Bias & Verification","Student: "+(state.name||"[no name]"),"Exported: "+new Date().toLocaleString(),""];
+ document.querySelectorAll("section.act").forEach(function(sec){
+  var h=sec.querySelector("h2").textContent;var lines=[];
+  sec.querySelectorAll("[data-k]").forEach(function(el){var k=el.getAttribute("data-k");if(el.type==="radio"){if(!el.checked)return;var card=el.closest(".card");var q=card?card.querySelector("h3").textContent:k;lines.push(q+": "+el.parentNode.textContent.trim());return;}
+   if(!filled(k))return;lines.push(labelFor(el)+": "+state[k]);});
+  if(lines.length){out.push("=== "+h+" ===");out=out.concat(lines);out.push("");}
+ });
+ var r=rubric();if(r.n===5)out.push("Activity 6 reliability score: "+r.tot+"/20 ("+r.lab+")");
+ out.push("");out.push("=== A2 memo preview ===");out.push(memo());
+ return out.join("\n");
+}
+$("btnCopy").addEventListener("click",function(){copyText(allAnswers(),"Answers copied");});
+$("btnExport").addEventListener("click",function(){
+ var blob=new Blob([allAnswers()],{type:"text/plain"});var a=document.createElement("a");
+ var nm=(state.name||"student").replace(/[^A-Za-z0-9]+/g,"-");a.href=URL.createObjectURL(blob);a.download="AI-Sprint-Week3-"+nm+".txt";document.body.appendChild(a);a.click();document.body.removeChild(a);toast("Exported");
+});
+$("btnReset").addEventListener("click",function(){
+ if(!window.confirm("Clear ALL your Week 3 work on this device? Export it first if you need a copy."))return;
+ state={};save();document.querySelectorAll("[data-k]").forEach(function(el){if(el.type==="radio")el.checked=false;else el.value="";});
+ document.querySelectorAll(".fb").forEach(function(f){f.className="fb";});document.querySelectorAll("select.ok,select.no").forEach(function(s){s.classList.remove("ok","no");});update();toast("Cleared");
+});
+update();
+window.__w3={state:function(){return state;},memo:memo,allAnswers:allAnswers,rubric:rubric};
+})();
+
+</script>
+</body>
+</html>
